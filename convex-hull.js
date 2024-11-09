@@ -273,16 +273,4 @@ function ConvexHull (ps, viewer) {
         }, animation_speed);
     }
 
-
-    // Return a new PointSet consisting of the points along the convex
-    // hull of ps. This method should **not** perform any
-    // visualization. It should **only** return the convex hull of ps
-    // represented as a (new) PointSet. Specifically, the elements in
-    // the returned PointSet should be the vertices of the convex hull
-    // in clockwise order, starting from the left-most point, breaking
-    // ties by minimum y-value.
-    this.getConvexHull = function () {
-
-	
-    } // getConvexHull
-    } // ConvexHull
+} // ConvexHull
