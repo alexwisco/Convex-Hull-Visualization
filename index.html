@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <!-- link files -->
+         <link rel="stylesheet" href="styles.css">
+         <meta charset="UTF-8">
+         <title> Convex Hull Visualization </title>
+         <script src = "convex-hull.js" defer> </script> 
+    </head>
+
+    <body>
+
+        <div class = "header"> 
+            <div class = "inner_header">
+                <h1> Convex Hull Visualization </h1>
+                
+            </div>
+        </div>
+
+        <p> Click on the canvas to draw dots.
+            Click Start, then click step to view the algorithm one step at a time,
+            or animate to view the entire run.
+        </p>
+
+            <button id = "start"> start </button>
+            <!-- undisabled in convex-hull as nec -->
+            <button disabled id = "step"> step </button>
+            <button disabled id="animate"> animate </button>
+        
+    
+        <div id="container">
+            <svg id ="canvas"></svg>
+        </div>
+
+    </body>
+
+
+</html>
