@@ -5,9 +5,9 @@ const SVG_HEIGHT = 400;
 // fields
 const canvas = document.querySelector("#canvas");
 let pointSet = new PointSet(); // for dots
-let CHV = new ConvexHullViewer(canvas, pointSet);
-let ch = new ConvexHull(pointSet, CHV);
-let ready = false; // switch ready flip once ... TODO
+let convex_hull_viewer = new ConvexHullViewer(canvas, pointSet);
+let convex_hull = new ConvexHull(pointSet, convex_hull_viewer);
+let ready = false; // handling buttons/make sure everything is ready before user starts
 let animation_speed = 600; // speed in ns of algorithm steps
 
 // represent a 2d point (x,y).
@@ -96,7 +96,7 @@ function PointSet() {
         }
 
 
-    // return a string representation of this PointSet
+    // debugging
     this.toString = function () {
         let str = '[';
         for (let pt of this.points) {
@@ -110,9 +110,9 @@ function PointSet() {
 }
 
 // Where the magic happens - takes the svg canvas element and a point set
-function ConvexHullViewer (svg, ps) {
+function ConvexHullViewer (svg, pSet) {
     this.svg = svg; // where the visualization is drawn
-    this.ps = ps;
+    this.pSet = pSet;
 
     let rect = svg.getBoundingClientRect();
 
@@ -126,13 +126,13 @@ function ConvexHullViewer (svg, ps) {
     animateClick.addEventListener('click', animateClicked);
 
     function startClicked() {
-        ch.start();
+        convex_hull.start();
     } // startClicked
     function stepClicked () {
-        ch.step();
+        convex_hull.step();
     } // stepClicked
     function animateClicked () {
-        ch.animate();
+        convex_hull.animate();
     } // animateClicked
 
     // Drawing a dot on a user's mouse click
@@ -151,9 +151,9 @@ function ConvexHullViewer (svg, ps) {
             circle.setAttribute('fill', 'green');
             circle.classList.add("circle");
             // point added to backend pointset
-            ps.addNewPoint(x, y); 
+            pSet.addNewPoint(x, y); 
             svg.appendChild(circle); 
-            console.log(ps.toString()); // debugging
+            console.log(Set.toString()); // debugging
         }
            
     }
@@ -179,12 +179,12 @@ function ConvexHullViewer (svg, ps) {
 
 // An object representing an instance of the convex hull problem
 // takes a point set and a viewer for displaying
-function ConvexHull (ps, viewer) {
-    this.ps = ps;          
+function ConvexHull (pSet, viewer) {
+    this.pSet = pSet;          
     this.viewer = viewer;  
-    let turnedRight = true; // denotes the direction turned is the correct one
+    let turnedRight = true; //direction turned is the correct one
     let upper = true; // if on upper side of point set on plane
-    let algo_stack = []; // temp stack that deals with the points we are testing 
+    this.algo_stack = []; // temp stack that deals with the points currently testing 
     let i = 2; // easier for stepping
 
 
@@ -205,47 +205,48 @@ function ConvexHull (ps, viewer) {
     this.start = function () {
         let step = document.getElementById("step");
         let animate = document.getElementById("animate");
+        // Don't want user to click through or animate before they have drawn points and clicked start
         step.removeAttribute("disabled");
         animate.removeAttribute("disabled");
         // lets users click step and animate buttons once we have clicked start 
+        // if clicked again, reset, fix this and make buttons clearer with a clear button
         document.querySelectorAll('.line').forEach(e => e.remove());
         i = 2;
         upper = true;
-        pointsFinalized = true;
-        ps.sort();
+        pSet.sort();
         algo_stack = [];
-        upper = true;
-        algo_stack.push(ps.points[0]);
-        algo_stack.push(ps.points[1]);
+        algo_stack.push(pSet.points[0]);
+        algo_stack.push(pSet.points[1]);
         viewer.drawLine(algo_stack[0], algo_stack[1]);
     } // start 
 
     // perform a single step of the algorithm performed on ps
     this.step = function () {
     document.querySelectorAll('.reviewed').forEach(e => e.remove());
-    if ((i==ps.size()) && !upper){
+    if ((i==pSet.size()) && !upper){
         let element = document.querySelector("#step");
         element.setAttribute("disabled","");
         return;
-    } // if 
-    if (i==ps.size()) {
+    }
+
+    if (i==pSet.size()) {
         algo_stack = [];
-        ps.reverse();
-        algo_stack.push(ps.points[0]);
-        algo_stack.push(ps.points[1]);
+        pSet.reverse();
+        algo_stack.push(pSet.points[0]);
+        algo_stack.push(pSet.points[1]);
         viewer.drawLine(algo_stack[0],algo_stack[1]);
         i = 2;
         upper = false;
         return;
-    } // if 
+    } 
 
-    if (algo_stack.length ==1 ) {
-        viewer.drawLine(algo_stack[algo_stack.length - 1], ps.points[i]);
-        algo_stack.push(ps.points[i]);
+    if (algo_stack.length == 1) {
+        viewer.drawLine(algo_stack[algo_stack.length - 1], pSet.points[i]);
+        algo_stack.push(pSet.points[i]);
 
     } else {
 
-        turnedRight = rightTurn(algo_stack[algo_stack.length-2], algo_stack[algo_stack.length-1], ps.points[i]);
+        turnedRight = rightTurn(algo_stack[algo_stack.length-2], algo_stack[algo_stack.length-1], pSet.points[i]);
         let element = viewer.svg.lastElementChild;
 
         while ((!turnedRight) && algo_stack.length > 1) {
@@ -256,14 +257,14 @@ function ConvexHull (ps, viewer) {
             if (algo_stack.length == 1) {
                 break;
             } 
-            turnedRight = rightTurn(algo_stack[algo_stack.length-2], algo_stack[algo_stack.length-1], ps.points[i]);
-        } // while 
+            turnedRight = rightTurn(algo_stack[algo_stack.length-2], algo_stack[algo_stack.length-1], pSet.points[i]);
+        } 
 
-        viewer.drawLine(algo_stack[algo_stack.length-1], ps.points[i]);
-        algo_stack.push(ps.points[i]);
+        viewer.drawLine(algo_stack[algo_stack.length-1], pSet.points[i]);
+        algo_stack.push(pSet.points[i]);
         i++;
 
-    } // else 
+    } 
     } // step 
 
     // repeatedly steps

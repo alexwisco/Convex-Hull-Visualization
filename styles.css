@@ -7,12 +7,7 @@ p {
 }
 
 /* Make a good header for the rest of the algorithm pages to follow */ 
-*{
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    text-decoration: none;
-}
+
 
 .header {
     width: 100%;
@@ -58,5 +53,5 @@ p {
     stroke: #06402B;
 }
 .reviewed {
-    stroke:white;
+    stroke: #5C4033;
 }
