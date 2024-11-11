@@ -2,36 +2,62 @@
 <html lang = "en">
     <head>
         <!-- link files -->
-         <link rel="stylesheet" href="styles.css">
+         <link rel="stylesheet" href="style.css">
          <meta charset="UTF-8">
-         <title> Convex Hull Visualization </title>
-         <script src = "convex-hull.js" defer> </script> 
+         <title> Alex Wisco </title>
+         <script src = "convex-hull.js" defer> </script>
     </head>
 
-    <body>
+        <body>
 
-        <div class = "header"> 
-            <div class = "inner_header">
-                <h1> Convex Hull Visualization </h1>
-                
+            <div class = "header"> 
+                <div class = "inner_header">
+                    <h1> Convex Hull + CSS Grid </h1>
+                </div>
             </div>
-        </div>
 
-        <p> Click on the canvas to draw dots.
-            Click Start, then click step to view the algorithm one step at a time,
-            or animate to view the entire run.
-        </p>
+            <div class="page_background">
+
+                <div class="grid">
+
+                    <div> 
+                        <p>
+                        In computational geometry, a convex hull is the smallest convex
+                        polygon that contains a given set of points. It is a fundamental
+                        concept with applications in various
+                        fields such as computer graphics, robotics, and image processing. - GeeksForGeeks
+                        </p>
+                    </div>
+
+                    <div id ="container">
+                        <svg id = "canvas"></svg>    
+                    </div>
+
+                    <div>
+                        <p>
+                        This mini-project combines a
+                         visualization of a neat algorithm -- the Graham Scan --
+                        with some practice with CSS grids.
+                        </p>
+
+                        <p>
+                            Click some dots on the canvas, then click start. You can choose to either step through each individual calculation
+                            or animate the entire algorithm. 
+                        </p>
+                    </div>
+
 
             <button id = "start"> start </button>
             <!-- undisabled in convex-hull as nec, make a menu -->
             <button disabled id = "step"> step </button>
             <button disabled id="animate"> animate </button>
+            
+                </div>
+
+            </div>
+    </div>
         
     
-        <div id="container">
-            <svg id ="canvas"></svg>
-        </div>
-
     </body>
 
 
