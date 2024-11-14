@@ -148,7 +148,7 @@ function ConvexHullViewer (svg, pSet) {
             circle.setAttribute('cx', x - rect.left); 
             circle.setAttribute('cy', y - rect.top); 
             circle.setAttribute('r', 5);
-            circle.setAttribute('fill', 'green');
+            circle.setAttribute('fill', 'purple');
             circle.classList.add("circle");
             // point added to backend pointset
             pSet.addNewPoint(x, y); 
