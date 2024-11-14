@@ -155,10 +155,10 @@ h1 {
 
 .line {
     stroke-width: 4px;
-    stroke: #532b68;
+    stroke: #06402B;
 }
 .reviewed {
-    stroke: black;
+    stroke: #5C4033;
 }
 
 button {
