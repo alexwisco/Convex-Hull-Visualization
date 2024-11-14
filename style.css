@@ -1,0 +1,86 @@
+.page_background {
+    background-color: antiquewhite;
+    width: 100%;
+    height: 100%;
+    position:absolute;
+}
+
+p {
+    color: antiquewhite;
+}
+
+
+.header {
+    width: 100%;
+    height: 80px;
+    display: block;
+    background-color: #06402B;
+    
+}
+
+.inner_header {
+    width: 1000px;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+   
+    background-color: #072b1e;
+    color: antiquewhite;
+    text-align: center;
+}
+
+.grid {
+    display:grid;
+    grid-template-columns: 15% 70% 15%;
+    /*grid-column-gap: 1em; */
+    grid-row-gap:1em;
+    text-align: center;
+}
+
+
+.grid > div {
+    background: #eee ;
+    padding: 1em;
+}
+
+.grid > div:nth-child(odd) { /* Just the side bars for explanations*/
+    background-color: #072b1e;
+    background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
+    
+}
+
+.grid > div:nth-child(even){
+    background: #06402B;
+}
+
+#canvas {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #072b1e;
+}
+
+/* adjusting for mobile? */
+#container {
+
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
+    margin-top: 10px;
+    position: relative;
+    background-color: antiquewhite;
+    border: 2px solid black;
+}
+
+.line {
+    stroke-width: 4px;
+    stroke: #06402B;
+}
+.reviewed {
+    stroke: #5C4033;
+}
+
+button {
+    font-size: 20px;
+    padding: 20px;
+
+}
